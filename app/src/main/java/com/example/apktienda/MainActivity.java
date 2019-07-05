@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                 try{
                     String token=response.getString("token");
+                    String idUser=response.getString("idUser");
                     alertDialog.setTitle("RESPONSE SERVER");
                     alertDialog.setMessage("Sesion Iniciada");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL,"OK",new DialogInterface.OnClickListener(){
@@ -79,10 +80,12 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
+                            startActivity(new Intent(getApplicationContext(),homeCompras.class));
                         }
                     });
                     alertDialog.show();
                     utils.TOKEN="data "+token;
+                    utils.idUSer=idUser;
                 }catch(Exception e){
                     e.printStackTrace();
                 }

@@ -12,8 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".NuevoProducto"
+            android:label="@string/title_activity_nuevo_producto"></activity>
+        <activity
+            android:name=".homeVentas"
+            android:label="@string/title_activity_home_ventas" />
+        <activity
             android:name=".homeCompras"
-            android:label="@string/title_activity_home_compras"></activity>
+            android:label="@string/title_activity_home_compras" />
         <activity
             android:name=".home"
             android:label="@string/title_activity_home" />
