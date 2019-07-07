@@ -44,7 +44,7 @@
         android:layout_height="28dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="24dp"
-        android:text="TextView"
+        android:text="Cantidad:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgPV" />
 
@@ -54,7 +54,7 @@
         android:layout_height="37dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Button"
+        android:text="Editar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +64,7 @@
         android:layout_height="35dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="Button"
+        android:text="Eliminar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPV" />
 </android.support.constraint.ConstraintLayout>
