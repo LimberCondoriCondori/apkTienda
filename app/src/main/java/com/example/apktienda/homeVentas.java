@@ -8,9 +8,26 @@ import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
-public class homeVentas extends AppCompatActivity {
+import com.example.apktienda.Utils.OnLoadAllList;
+import com.example.apktienda.Utils.ProductList;
+import com.example.apktienda.Utils.Producto;
+import com.example.apktienda.Utils.ProductosVentaAdapter;
+import com.example.apktienda.Utils.Query;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
+
+public class homeVentas extends AppCompatActivity implements OnLoadAllList {
     private TextView mTextMessage;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -42,7 +59,8 @@ public class homeVentas extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         loadComponets();
     }
-
+    private ListView listViewP;
+    ProductList list;
     private void loadComponets() {
         Button btnNuevo=findViewById(R.id.btnNuevoP);
         btnNuevo.setOnClickListener(new View.OnClickListener(){
@@ -52,6 +70,47 @@ public class homeVentas extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),NuevoProducto.class));
             }
         });
+
+        listViewP=findViewById(R.id.listViewPV);
+        list=new ProductList(this);
+        cargarProductos();
+        //listViewP.setAdapter(new ProductosVentaAdapter(this,list));
+    }
+    public void cargarProductos(){
+        AsyncHttpClient client=new AsyncHttpClient();
+        client.addHeader("authorization",utils.TOKEN);
+        Query query=new Query();
+        query.add("idUser",utils.idUSer);
+        client.get(utils.HOST+utils.PRODUCT+"user"+query.getQuery(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                for(int i=0;i<response.length();i++) {
+                    JSONObject jsonO = null;
+                    try {
+                        jsonO = response.getJSONObject(i);
+                        Producto p = new Producto(
+                                jsonO.getString("name"),
+                                jsonO.getString("description"),
+                                jsonO.getString("idUser"),
+                                jsonO.getString("_id"),
+                                jsonO.getString("picture"),
+                                Double.parseDouble(jsonO.getString("price").toString()),
+                                Integer.parseInt(jsonO.getString("cant"))
+
+                        );
+                        list.addAndLoadImg(p);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
     }
 
+    @Override
+    public void onLoadAllList() {
+        ProductosVentaAdapter pva=new ProductosVentaAdapter(homeVentas.this,list);
+        listViewP.setAdapter(pva);
+    }
 }
