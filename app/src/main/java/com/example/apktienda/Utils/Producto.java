@@ -22,6 +22,7 @@ public class Producto {
         this.picture = picture;
         this.price = price;
         this.cant = cant;
+        img=null;
     }
 
     public String getPicture() {

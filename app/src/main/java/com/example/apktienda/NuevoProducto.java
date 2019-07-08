@@ -79,6 +79,7 @@ public class NuevoProducto extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        reviewPermissions();
         Button guardar=findViewById(R.id.btnSaveNP);
         IMG=findViewById(R.id.imgNP);
         IMG.setOnClickListener(new View.OnClickListener() {
@@ -267,5 +268,18 @@ public class NuevoProducto extends AppCompatActivity {
         String path = directory.getAbsolutePath() + "/profile.jpg";
         return path;
         //return directory.getAbsolutePath();
+    }
+    private boolean reviewPermissions() {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+            return true;
+        }
+
+        if(this.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
+                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            return true;
+        }
+        requestPermissions(new String [] {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
+        return false;
     }
 }

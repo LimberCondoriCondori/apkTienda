@@ -65,7 +65,8 @@ public class ProductosVentaAdapter extends BaseAdapter {
         query.add("img",lista.get(i).getPicture());
         name.setText(lista.get(i).getName());
         cant.setText(""+lista.get(i).getCant());
-        img.setImageBitmap(lista.get(i).getImg());
+        if(img!=null)
+            img.setImageBitmap(lista.get(i).getImg());
 
         /*
         Editar Producto

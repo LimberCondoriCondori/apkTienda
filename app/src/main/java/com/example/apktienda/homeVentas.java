@@ -103,6 +103,8 @@ public class homeVentas extends AppCompatActivity implements OnLoadAllList {
                         e.printStackTrace();
                     }
                 }
+                ProductosVentaAdapter pva=new ProductosVentaAdapter(homeVentas.this,list);
+                listViewP.setAdapter(pva);
 
             }
         });

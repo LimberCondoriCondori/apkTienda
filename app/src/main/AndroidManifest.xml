@@ -23,9 +23,7 @@
         <activity
             android:name=".homeCompras"
             android:label="@string/title_activity_home_compras" />
-        <activity
-            android:name=".home"
-            android:label="@string/title_activity_home" />
+
         <activity android:name=".registerUser" />
         <activity android:name=".MainActivity">
             <intent-filter>
