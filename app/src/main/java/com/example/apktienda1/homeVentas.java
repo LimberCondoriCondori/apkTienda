@@ -1,29 +1,29 @@
-package com.example.apktienda;
+package com.example.apktienda1;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.annotation.NonNull;
+
+import com.example.apktienda1.Utils.OnLoadAllList;
+import com.example.apktienda1.Utils.ProductList;
+import com.example.apktienda1.Utils.Producto;
+import com.example.apktienda1.Utils.ProductosVentaAdapter;
+import com.example.apktienda1.Utils.Query;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.apktienda.Utils.OnLoadAllList;
-import com.example.apktienda.Utils.ProductList;
-import com.example.apktienda.Utils.Producto;
-import com.example.apktienda.Utils.ProductosVentaAdapter;
-import com.example.apktienda.Utils.Query;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -107,6 +107,7 @@ public class homeVentas extends AppCompatActivity implements OnLoadAllList {
                 listViewP.setAdapter(pva);
 
             }
+
         });
     }
 

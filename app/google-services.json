@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "331694858668",
+    "firebase_url": "https://semionlinetienda.firebaseio.com",
+    "project_id": "semionlinetienda",
+    "storage_bucket": "semionlinetienda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331694858668:android:9e7f3196d603c99d",
+        "android_client_info": {
+          "package_name": "com.example.apktienda1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331694858668-jbvonbe6saf64ui48366184m0s12nia1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.apktienda1",
+            "certificate_hash": "728a6da01d7a8395966b2b54545f5d96dad4e1a5"
+          }
+        },
+        {
+          "client_id": "331694858668-p4e0aorb0s7nde9gclf9es83t17b82pf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnVG85f2QDECh8qWuL775hsU8qFV-VqQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331694858668-p4e0aorb0s7nde9gclf9es83t17b82pf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

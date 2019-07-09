@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">apkTienda</string>
-    <string name="title_activity_home">home</string>
-    <string name="title_home">Home</string>
+    <string name="app_name">apkTienda1</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_home_compras">homeCompras</string>
     <string name="title_activity_home_ventas">homeVentas</string>
     <string name="title_activity_nuevo_producto">NuevoProducto</string>
+    <string name="title_home">Home</string>
+    <string name="title_activity_register_user">registerUser</string>
 </resources>

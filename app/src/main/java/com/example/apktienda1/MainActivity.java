@@ -1,21 +1,22 @@
-package com.example.apktienda;
+package com.example.apktienda1;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.*;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
-
 
 public class MainActivity extends AppCompatActivity {
     public Button login;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         registerUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),registerUser.class));
+               // startActivity(new Intent(getApplicationContext(),registerUser.class));
             }
         });
 
@@ -50,9 +51,10 @@ public class MainActivity extends AppCompatActivity {
         params.add("password",password.getText().toString());
 
         client.post(utils.HOST+utils.LOGIN,params,new JsonHttpResponseHandler(){
+
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                 //String token=responseString;
                 alertDialog.setTitle("RESPONSE SERVER");
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 alertDialog.show();
             }
+
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

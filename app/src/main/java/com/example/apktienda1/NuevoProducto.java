@@ -1,8 +1,8 @@
-package com.example.apktienda;
+package com.example.apktienda1;
+
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -14,22 +14,20 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
-import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.apktienda.Utils.Query;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.apktienda1.Utils.Query;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -37,16 +35,14 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.client.utils.URIBuilder;
 
 public class NuevoProducto extends AppCompatActivity {
     private TextView mTextMessage;
+
     private int CODE_CAMERA=110;
     private int CODE_GALERY=111;
     private ImageView IMG;
@@ -122,7 +118,6 @@ public class NuevoProducto extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void save() {
@@ -141,6 +136,8 @@ public class NuevoProducto extends AppCompatActivity {
         String par="";
         client.addHeader("authorization", utils.TOKEN);
         client.post(utils.HOST+utils.PRODUCT,params,new JsonHttpResponseHandler(){
+
+
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
@@ -282,4 +279,5 @@ public class NuevoProducto extends AppCompatActivity {
         requestPermissions(new String [] {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
         return false;
     }
+
 }

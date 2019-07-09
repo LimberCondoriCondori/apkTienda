@@ -1,4 +1,5 @@
-package com.example.apktienda;
+package com.example.apktienda1;
+
 import android.graphics.Bitmap;
 
 public class utils {
@@ -17,5 +18,3 @@ public class utils {
     }
 
 }
-
-

@@ -1,23 +1,29 @@
-package com.example.apktienda;
+package com.example.apktienda1;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+
+import com.loopj.android.http.JsonHttpResponseHandler;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
 public class registerUser extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +37,6 @@ public class registerUser extends AppCompatActivity {
             }
         });
     }
-
     private void regitrar() {
         String firstname=((TextView)findViewById(R.id.firstaname)).getText().toString();
         String surname=((TextView)findViewById(R.id.surname)).getText().toString();
@@ -49,6 +54,8 @@ public class registerUser extends AppCompatActivity {
             params.add("phone",phone);
 
             client.post(utils.HOST+utils.REGISTER_USER,params,new JsonHttpResponseHandler(){
+
+
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     AlertDialog alertDialog = new AlertDialog.Builder(registerUser.this).create();
@@ -107,4 +114,5 @@ public class registerUser extends AppCompatActivity {
         }
 
     }
+
 }
