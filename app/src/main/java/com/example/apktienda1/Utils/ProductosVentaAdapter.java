@@ -13,7 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.apktienda1.EditarProducto;
 import com.example.apktienda1.homeVentas;
+import com.example.apktienda1.productView;
 import com.example.apktienda1.utils.*;
 import com.example.apktienda1.R;
 import com.example.apktienda1.utils;
@@ -65,18 +67,13 @@ public class ProductosVentaAdapter extends BaseAdapter {
         query.add("img",lista.get(i).getPicture());
         name.setText(lista.get(i).getName());
         cant.setText(""+lista.get(i).getCant());
-        if(img!=null)
+        if(img!=null) {
             img.setImageBitmap(lista.get(i).getImg());
+            img.setOnClickListener(new OnClicView(lista.get(i)));
+        }
 
-        /*
-        Editar Producto
-        btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //enviar a la actividad editar con la id del producto
+        btnEdit.setOnClickListener(new OnclicEdit(lista.get(i)));
 
-            }
-        });*/
         OnClicList onClicEdit=new OnClicList(lista.get(i).getId());
         btnDelete.setOnClickListener(onClicEdit);
         return view;
@@ -105,6 +102,38 @@ public class ProductosVentaAdapter extends BaseAdapter {
                     CONTEXT.startActivity(new Intent(CONTEXT, homeVentas.class));
                 }
             });
+        }
+    }
+    private class OnclicEdit implements View.OnClickListener{
+        Producto p;
+
+        public OnclicEdit(Producto p) {
+            this.p = p;
+        }
+        @Override
+        public void onClick(View view) {
+            Intent i=new Intent(CONTEXT,EditarProducto.class);
+            i.putExtra("id",p.getId());
+            CONTEXT.startActivity(i);
+        }
+    }
+    private class OnClicView implements View.OnClickListener {
+        Producto producto;
+        public OnClicView(Producto p){
+            producto=p;
+        }
+        @Override
+        public void onClick(View view) {
+            Intent i=new Intent(CONTEXT.getApplicationContext(), productView.class);
+            i.putExtra("id",producto.getId());
+            i.putExtra("idUser",producto.getIdUser());
+            i.putExtra("name",producto.getName());
+            i.putExtra("description",producto.getDescription());
+            i.putExtra("picture",producto.getPicture());
+            i.putExtra("price",producto.getPrice());
+            i.putExtra("cant",producto.getCant());
+            // i.putExtra("img",producto.getImg());
+            CONTEXT.getApplicationContext().startActivity(i);
         }
     }
 }

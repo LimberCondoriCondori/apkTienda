@@ -1,6 +1,5 @@
 package com.example.apktienda1;
 
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,6 +13,20 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
+import com.example.apktienda1.Utils.OnLoadImg;
+import com.example.apktienda1.Utils.Producto;
+import com.example.apktienda1.Utils.Query;
+import com.example.apktienda1.Utils.TaskImg;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,16 +35,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.apktienda1.Utils.Query;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,13 +45,13 @@ import java.io.IOException;
 
 import cz.msebera.android.httpclient.Header;
 
-public class NuevoProducto extends AppCompatActivity {
-
+public class EditarProducto extends AppCompatActivity implements OnLoadImg {
     private int CODE_CAMERA=110;
     private int CODE_GALERY=111;
-    private ImageView IMG;
-    private String path=null;
 
+    private String path=null;
+    private Button guardar;
+    private Button cancelar;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -55,15 +59,16 @@ public class NuevoProducto extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    startActivity(new Intent(NuevoProducto.this,homeCompras.class));
+                    startActivity(new Intent(EditarProducto.this,homeCompras.class));
                     finish();
                     return true;
                 case R.id.navigation_dashboard:
-                    startActivity(new Intent(NuevoProducto.this,homeVentas.class));
+
+                    startActivity(new Intent(EditarProducto.this,homeVentas.class));
                     finish();
                     return true;
                 case R.id.navigation_notifications:
-                    //startActivity(new Intent(NuevoProducto.this,homeCompras.class));
+                    //startActivity(new Intent(EditarProducto.this,homeCompras.class));
                     //finish();
                     return true;
             }
@@ -74,25 +79,80 @@ public class NuevoProducto extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nuevo_producto);
+        setContentView(R.layout.activity_editar_producto);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        reviewPermissions();
-        Button guardar=findViewById(R.id.btnSaveNP);
-        Button cancelar=findViewById(R.id.btnCancelNP);
+        loadComponents();
+
+    }
+    private Producto p;
+    private void loadComponents() {
+        Intent i=getIntent();
+        String id=i.getExtras().getString("id");
+        AsyncHttpClient client =new AsyncHttpClient();
+        Query query=new Query();
+        query.add("_id",id);
+        client.get(utils.HOST+utils.PRODUCT+query.getQuery(),new RequestParams(),new JsonHttpResponseHandler(){
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    JSONObject o=response.getJSONObject(0);
+                    p=new Producto(
+                            o.getString("name"),
+                            o.getString("description"),
+                            o.getString("idUser"),
+                            o.getString("_id"),
+                            o.getString("picture"),
+                            Double.parseDouble(o.getString("price")),
+                            Integer.parseInt(o.getString("cant"))
+                    );
+                    show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+    public ImageView img;
+    TextView name,description,price,cant;
+
+    private void show(){
+        name=findViewById(R.id.nameEP);
+        description=findViewById(R.id.descriptionEP);
+        price=findViewById(R.id.priceEP);
+        cant=findViewById(R.id.cantEP);
+        img=findViewById(R.id.imgEP);
+        name.setText(p.getName());
+        description.setText(p.getDescription());
+        price.setText(""+p.getPrice());
+        cant.setText(""+p.getCant());
+        TaskImg t=new TaskImg();
+        String urlDownloadImg=utils.HOST+utils.DOWNLOAD_PRODUCT_IMG;
+        Query query=new Query();
+        query.add("img",p.getPicture());
+        urlDownloadImg=urlDownloadImg+query.getQuery();
+        t.execute(urlDownloadImg);
+        t.setLoadImage(this,-1);
+        guardar=findViewById(R.id.btnGuardarEP);
+        cancelar=findViewById(R.id.btnCancelarEP);
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(NuevoProducto.this,homeVentas.class));
+                startActivity(new Intent(EditarProducto.this,homeVentas.class));
                 finish();
             }
         });
-        IMG=findViewById(R.id.imgNP);
-        IMG.setOnClickListener(new View.OnClickListener() {
+        img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog alertDialog = new AlertDialog.Builder(NuevoProducto.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(EditarProducto.this).create();
                 //String token=responseString;
                 alertDialog.setTitle("SELECT");
                 alertDialog.setMessage("Seleccione el metodo");
@@ -121,21 +181,22 @@ public class NuevoProducto extends AppCompatActivity {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(path!=null)
-                    save();
-                else {
-                    Toast t = Toast.makeText(NuevoProducto.this, "Seleccione una imagen", Toast.LENGTH_SHORT);
-                    t.show();
-                }
+
+                save();
             }
         });
     }
 
+    @Override
+    public void onLoadImg(int index, Bitmap img) {
+        this.img.setImageBitmap(img);
+        p.setImg(img);
+    }
     private void save() {
-        String name=((TextView)findViewById(R.id.nameNP)).getText().toString();
-        String description=((TextView)findViewById(R.id.descriptionNP)).getText().toString();
-        String price=((TextView)findViewById(R.id.priceNP)).getText().toString();
-        String cant=((TextView)findViewById(R.id.cantNP)).getText().toString();
+        String name=this.name.getText().toString();
+        String description=this.description.getText().toString();
+        String price=this.price.getText().toString();
+        String cant=this.cant.getText().toString();
         AsyncHttpClient client= new AsyncHttpClient();
         RequestParams params=new RequestParams();
         params.add("idUser",utils.idUSer);
@@ -144,14 +205,16 @@ public class NuevoProducto extends AppCompatActivity {
         params.add("price",price);
         params.add("cant",cant);
         //token
+        Query query=new Query();
+        query.add("id",p.getId());
         String par="";
         client.addHeader("authorization", utils.TOKEN);
-        client.post(utils.HOST+utils.PRODUCT,params,new JsonHttpResponseHandler(){
+        client.patch(utils.HOST+utils.PRODUCT+query.getQuery(),params,new JsonHttpResponseHandler(){
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                AlertDialog alertDialog = new AlertDialog.Builder(NuevoProducto.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(EditarProducto.this).create();
                 String msn="";
                 try{
                     msn=errorResponse.getString("msn");
@@ -172,13 +235,11 @@ public class NuevoProducto extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                AlertDialog alertDialog = new AlertDialog.Builder(NuevoProducto.this).create();
                 try{
-                    String id=response.getString("id");
                     //imagen para el producto
-                    //Toast t=Toast.makeText(NuevoProducto.this,"Producto creado exitosamente", Toast.LENGTH_SHORT);
-                    //t.show();
-                    uploadImage(id);
+                    Toast t=Toast.makeText(EditarProducto.this,"Producto creado exitosamente", Toast.LENGTH_SHORT);
+                    t.show();
+                    uploadImage(p.getId());
 
                 }catch(Exception e){
                     e.printStackTrace();
@@ -189,7 +250,7 @@ public class NuevoProducto extends AppCompatActivity {
     }
 
     private void uploadImage(String id) {
-
+        if(path!=null){
         AsyncHttpClient client=new AsyncHttpClient();
         RequestParams params=new RequestParams();
         File file=new File(path);
@@ -207,20 +268,23 @@ public class NuevoProducto extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast t=Toast.makeText(NuevoProducto.this,"No se Pudo Subir la Imagen del Producto",Toast.LENGTH_LONG);
+                Toast t=Toast.makeText(EditarProducto.this,"No se Pudo Subir la Imagen del Producto",Toast.LENGTH_LONG);
                 t.show();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                Toast t=Toast.makeText(NuevoProducto.this,"Producto creado exitosamente!!!",Toast.LENGTH_LONG);
+                Toast t=Toast.makeText(EditarProducto.this,"Imagen del Producto subido exitosamente",Toast.LENGTH_LONG);
                 t.show();
-                startActivity(new Intent(NuevoProducto.this,homeVentas.class));
+                startActivity(new Intent(EditarProducto.this,homeVentas.class));
                 finish();
             }
 
-        });
+        });}else{
+            startActivity(new Intent(getApplicationContext(),homeVentas.class));
+            finish();
+        }
     }
 
     @Override
@@ -239,7 +303,7 @@ public class NuevoProducto extends AppCompatActivity {
                 //File f=new File();
                 //path=f.getPath();
             }
-            IMG.setImageBitmap(BitmapFactory.decodeFile(path));
+            this.img.setImageBitmap(BitmapFactory.decodeFile(path));
         }
     }
     public String getRealPathFromURI(Uri uri) {
@@ -295,5 +359,4 @@ public class NuevoProducto extends AppCompatActivity {
         requestPermissions(new String [] {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
         return false;
     }
-
 }

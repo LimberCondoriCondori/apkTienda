@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.example.apktienda1.Utils.OnLoadImg;
+import com.example.apktienda1.Utils.Producto;
 import com.example.apktienda1.Utils.Query;
 import com.example.apktienda1.Utils.TaskImg;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,13 +29,16 @@ public class productView extends AppCompatActivity implements OnLoadImg {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-
+                    startActivity(new Intent(productView.this,homeCompras.class));
+                    finish();
                     return true;
                 case R.id.navigation_dashboard:
-
+                    startActivity(new Intent(productView.this,homeVentas.class));
+                    finish();
                     return true;
                 case R.id.navigation_notifications:
-
+                    //startActivity(new Intent(productView.this,homeCompras.class));
+                    //finish();
                     return true;
             }
             return false;
@@ -71,6 +76,11 @@ public class productView extends AppCompatActivity implements OnLoadImg {
 
         Button comprar=findViewById(R.id.btnComprarView);
         Button chat=findViewById(R.id.btnChatVIew);
+        if(idUser.equals(utils.idUSer)){
+            comprar.setVisibility(View.INVISIBLE);
+            chat.setVisibility(View.INVISIBLE);
+
+        }
     }
 
 

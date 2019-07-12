@@ -8,4 +8,5 @@
     <string name="title_home">Home</string>
     <string name="title_activity_register_user">registerUser</string>
     <string name="title_activity_product_view">productView</string>
+    <string name="title_activity_editar_producto">EditarProducto</string>
 </resources>
