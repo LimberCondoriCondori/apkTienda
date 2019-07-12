@@ -1,12 +1,43 @@
 package com.example.apktienda1.Utils;
 
+import android.annotation.TargetApi;
 import android.graphics.Bitmap;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Producto {
+import androidx.annotation.RequiresApi;
+
+import java.io.Serializable;
+
+public class Producto implements Parcelable, Serializable {
     private String name, description,idUser,id,picture;
     private double price;
 
     Bitmap img;
+
+    protected Producto(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+        idUser = in.readString();
+        id = in.readString();
+        picture = in.readString();
+        price = in.readDouble();
+        img = in.readParcelable(Bitmap.class.getClassLoader());
+        cant = in.readInt();
+    }
+
+    public static final Creator<Producto> CREATOR = new Creator<Producto>() {
+        @Override
+        public Producto createFromParcel(Parcel in) {
+            return new Producto(in);
+        }
+
+        @Override
+        public Producto[] newArray(int size) {
+            return new Producto[size];
+        }
+    };
 
     public Bitmap getImg() {
         return img;
@@ -101,4 +132,34 @@ public class Producto {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeString(idUser);
+        parcel.writeString(id);
+        parcel.writeString(picture);
+
+        parcel.writeDouble(price);
+
+        parcel.writeParcelable(img,i);
+        parcel.writeString(name);
+
+    }
+    private void readFromParcel(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+        idUser = in.readString();
+        id = in.readString();
+        picture = in.readString();
+        price = in.readDouble();
+        img = in.readParcelable(Bitmap.class.getClassLoader());
+        cant = in.readInt();
+    }
 }

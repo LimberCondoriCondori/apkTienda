@@ -37,13 +37,15 @@ public class homeVentas extends AppCompatActivity implements OnLoadAllList {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    startActivity(new Intent(homeVentas.this,homeCompras.class));
+                    finish();
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    startActivity(new Intent(homeVentas.this,homeVentas.class));
+                    finish();
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+
                     return true;
             }
             return false;
@@ -56,7 +58,9 @@ public class homeVentas extends AppCompatActivity implements OnLoadAllList {
         setContentView(R.layout.activity_home_ventas);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
+        navView.setSelectedItemId(R.id.navigation_dashboard);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         loadComponets();
     }
     private ListView listViewP;
@@ -68,6 +72,7 @@ public class homeVentas extends AppCompatActivity implements OnLoadAllList {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),NuevoProducto.class));
+                finish();
             }
         });
 

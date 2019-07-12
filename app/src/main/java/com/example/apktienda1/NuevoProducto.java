@@ -202,6 +202,7 @@ public class NuevoProducto extends AppCompatActivity {
                 Toast t=Toast.makeText(NuevoProducto.this,"Imagen del Producto subido exitosamente",Toast.LENGTH_LONG);
                 t.show();
                 startActivity(new Intent(NuevoProducto.this,homeVentas.class));
+                finish();
             }
 
         });

@@ -7,4 +7,5 @@
     <string name="title_activity_nuevo_producto">NuevoProducto</string>
     <string name="title_home">Home</string>
     <string name="title_activity_register_user">registerUser</string>
+    <string name="title_activity_product_view">productView</string>
 </resources>

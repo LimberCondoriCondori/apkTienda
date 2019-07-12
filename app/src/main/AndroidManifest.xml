@@ -18,18 +18,27 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".productView"
+            android:label="@string/title_activity_product_view"></activity>
+        <activity
             android:name=".registerUser"
-            android:label="@string/title_activity_register_user"></activity>
+            android:finishOnTaskLaunch="true"
+            android:label="@string/title_activity_register_user" />
         <activity
             android:name=".NuevoProducto"
+            android:finishOnTaskLaunch="true"
             android:label="@string/title_activity_nuevo_producto" />
         <activity
             android:name=".homeVentas"
+            android:finishOnTaskLaunch="true"
             android:label="@string/title_activity_home_ventas" />
         <activity
             android:name=".homeCompras"
+            android:finishOnTaskLaunch="true"
             android:label="@string/title_activity_home_compras" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:finishOnTaskLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

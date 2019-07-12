@@ -10,7 +10,7 @@
         android:id="@+id/imgPV"
         android:layout_width="99dp"
         android:layout_height="98dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,6 +25,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imgPV"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,26 +46,29 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="24dp"
         android:text="Cantidad:"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgPV" />
 
     <Button
         android:id="@+id/editPV"
-        android:layout_width="86dp"
+        android:layout_width="89dp"
         android:layout_height="37dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="28dp"
         android:text="Editar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/deletePV"
-        android:layout_width="85dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="89dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="28dp"
         android:text="Eliminar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/cantPV"
         app:layout_constraintTop_toBottomOf="@+id/editPV" />
 </androidx.constraintlayout.widget.ConstraintLayout>

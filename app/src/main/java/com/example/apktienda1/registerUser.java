@@ -53,7 +53,7 @@ public class registerUser extends AppCompatActivity {
             params.add("password",password);
             params.add("phone",phone);
 
-            client.post(utils.HOST+utils.REGISTER_USER,params,new JsonHttpResponseHandler(){
+            client.post(utils.HOST+utils.USER,params,new JsonHttpResponseHandler(){
 
 
                 @Override
@@ -88,6 +88,7 @@ public class registerUser extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                finish();
                             }
                         });
                         alertDialog.show();
