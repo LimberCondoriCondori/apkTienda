@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.apktienda1.Utils.Methods;
 import com.example.apktienda1.Utils.Query;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -128,12 +130,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             startActivity(new Intent(getApplicationContext(),homeCompras.class));
-                            finish();
+                            //finish();
                         }
                     });
                     alertDialog.show();
                     utils.TOKEN="data "+token;
                     utils.idUSer=idUser;
+                    Methods.LoadChats();
+                    Methods.startSocket(main);
                 }catch(Exception e){
                     e.printStackTrace();
                 }
@@ -175,6 +179,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 try{
                     utils.idUSer=response.getString("idUser");
                     utils.TOKEN="data "+response.getString("token");
+                    Methods.LoadChats();
+                    Methods.startSocket(main);
                     AlertDialog al=new AlertDialog.Builder(MainActivity.this).create();
                     al.setTitle("RESPONSE SERVER");
                     al.setMessage("Sesion Iniciada");
@@ -186,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             Intent m=new Intent(getApplicationContext(),homeCompras.class);
                             //m.finishOnTaskLaunch(true);
                             startActivity(m);
-                            finish();
+                            //finish();
                         }
                     });
                     al.show();
@@ -196,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         });
     }
-
+    Activity main=this;
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 

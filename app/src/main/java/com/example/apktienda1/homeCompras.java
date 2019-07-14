@@ -45,7 +45,7 @@ public class homeCompras extends AppCompatActivity implements OnLoadAllList {
                     finish();
                     return true;
                 case R.id.navigation_notifications:
-
+                    startActivity(new Intent(homeCompras.this,ChatsActivity.class));
                     return true;
             }
             return false;
