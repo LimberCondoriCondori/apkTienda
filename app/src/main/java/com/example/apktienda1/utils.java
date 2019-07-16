@@ -8,8 +8,8 @@ import com.github.nkzawa.socketio.client.Socket;
 import java.util.ArrayList;
 
 public class utils {
-    public static String HOST = "http://192.168.43.57:8001";
-    public static String HOST_SOCKET="http://192.168.43.57:8002";
+    public static String HOST = "http://192.168.43.117:8001";
+    public static String HOST_SOCKET=HOST.substring(0,HOST.length()-4)+"8002";
     public static String USER = "/users/";
     public static String LOGIN = "/users/login";
     public static String LOGIN_WITH_GOOGLE = "/users/login_with_google";

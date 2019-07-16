@@ -18,8 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -62,7 +64,27 @@ public class homeCompras extends AppCompatActivity implements OnLoadAllList {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setSelectedItemId(R.id.navigation_home);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        RadioButton rbtec=findViewById(R.id.btnbuscartecnologia);
+        rbtec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadProducts("tecnologia");
+            }
+        });
+        RadioButton rbelec=findViewById(R.id.btnbuscarelectro);
+        rbelec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadProducts("electrodomesticos");
+            }
+        });
+        RadioButton rbvestir=findViewById(R.id.btnbuscarvestir);
+        rbvestir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadProducts("vestir");
+            }
+        });
         gridListView=findViewById(R.id.gridLawoutProducts);
         loadProducts("");
     }
@@ -72,7 +94,7 @@ public class homeCompras extends AppCompatActivity implements OnLoadAllList {
         AsyncHttpClient client=new AsyncHttpClient();
         Query query=new Query();
         if(!categoria.equals("")){
-            query.add("category",categoria);
+            query.add("categoria",categoria);
         }
 
         client.get(utils.HOST+utils.PRODUCT+query.getQuery(),new RequestParams(),new JsonHttpResponseHandler(){

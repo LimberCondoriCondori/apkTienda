@@ -42,15 +42,16 @@ public class msnsAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(lista.get(i).idUser.equals(utils.idUSer)){
-            if(view==null){
+            //if(view==null){
                 LayoutInflater inflater=(LayoutInflater) CONTEXT.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view=inflater.inflate(R.layout.view_model_msn_your,null);
-            }
+            //}
             TextView name=(TextView) view.findViewById(R.id.nametxtMyour);
             TextView msn=(TextView)view.findViewById(R.id.msntxtMyour);
             TextView date=(TextView) view.findViewById(R.id.datetxtMyour);
-            if(c.idVendedor.equals(lista.get(i).idUser))
+            if(c.idVendedor.equals(lista.get(i).idUser)) {
                 name.setText(c.fullNameV);
+            }
             else
                 name.setText(c.fullNameC);
 
@@ -59,10 +60,10 @@ public class msnsAdapter extends BaseAdapter {
             return view;
         }
         else{
-            if(view==null){
+            //if(view==null){
                 LayoutInflater inflater=(LayoutInflater) CONTEXT.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view=inflater.inflate(R.layout.view_model_msn_his,null);
-            }
+            //}
             TextView name=(TextView) view.findViewById(R.id.nametxtMhis);
             TextView msn=(TextView)view.findViewById(R.id.msntxtMhis);
             TextView date=(TextView) view.findViewById(R.id.datetxtMhis);

@@ -45,7 +45,8 @@ public class homeVentas extends AppCompatActivity implements OnLoadAllList {
                     finish();
                     return true;
                 case R.id.navigation_notifications:
-
+                    startActivity(new Intent(homeVentas.this,ChatsActivity.class));
+                    finish();
                     return true;
             }
             return false;
@@ -57,7 +58,7 @@ public class homeVentas extends AppCompatActivity implements OnLoadAllList {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_ventas);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        mTextMessage = findViewById(R.id.message);
+
         navView.setSelectedItemId(R.id.navigation_dashboard);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -67,6 +68,8 @@ public class homeVentas extends AppCompatActivity implements OnLoadAllList {
     ProductList list;
     private void loadComponets() {
         Button btnNuevo=findViewById(R.id.btnNuevoP);
+        Button btnCitas=findViewById(R.id.btnCitasV);
+
         btnNuevo.setOnClickListener(new View.OnClickListener(){
 
             @Override

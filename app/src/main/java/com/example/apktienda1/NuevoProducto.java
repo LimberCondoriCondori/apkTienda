@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,8 +64,8 @@ public class NuevoProducto extends AppCompatActivity {
                     finish();
                     return true;
                 case R.id.navigation_notifications:
-                    //startActivity(new Intent(NuevoProducto.this,homeCompras.class));
-                    //finish();
+                    startActivity(new Intent(NuevoProducto.this,ChatsActivity.class));
+                    finish();
                     return true;
             }
             return false;
@@ -76,7 +77,7 @@ public class NuevoProducto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_producto);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-
+        navView.setSelectedItemId(R.id.navigation_dashboard);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         reviewPermissions();
         Button guardar=findViewById(R.id.btnSaveNP);
@@ -129,9 +130,31 @@ public class NuevoProducto extends AppCompatActivity {
                 }
             }
         });
+        RadioButton rbelect=findViewById(R.id.btnelect);
+        rbelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                categoria="electrodomesticos";
+            }
+        });
+        RadioButton rbtec=findViewById(R.id.btntect);
+        rbtec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                categoria="tecnologia";
+            }
+        });
+        RadioButton rbvest=findViewById(R.id.btnvestir);
+        rbvest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                categoria="vestir";
+            }
+        });
     }
-
+    String categoria="";
     private void save() {
+        if(!categoria.equals("")){
         String name=((TextView)findViewById(R.id.nameNP)).getText().toString();
         String description=((TextView)findViewById(R.id.descriptionNP)).getText().toString();
         String price=((TextView)findViewById(R.id.priceNP)).getText().toString();
@@ -143,6 +166,7 @@ public class NuevoProducto extends AppCompatActivity {
         params.add("description",description);
         params.add("price",price);
         params.add("cant",cant);
+        params.add("categoria",categoria);
         //token
         String par="";
         client.addHeader("authorization", utils.TOKEN);
@@ -185,7 +209,11 @@ public class NuevoProducto extends AppCompatActivity {
                 }
 
             }
-        });
+        });}
+        else{
+            Toast t=Toast.makeText(this,"seleccione una categoria",Toast.LENGTH_LONG);
+            t.show();
+        }
     }
 
     private void uploadImage(String id) {

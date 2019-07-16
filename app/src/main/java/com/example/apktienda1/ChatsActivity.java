@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -48,8 +50,26 @@ public class ChatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setSelectedItemId(R.id.navigation_notifications);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         titulo=findViewById(R.id.tituloChats);
+        RadioButton rbCC=findViewById(R.id.btnChatsC);
+        rbCC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titulo.setText("Chats Comprador");
+                loadComponent(utils.CHATS_C);
+            }
+
+        });
+        RadioButton rbCV=findViewById(R.id.btnchatsV);
+        rbCV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titulo.setText("Chats Vendedor");
+                loadComponent(utils.CHATS_V);
+            }
+        });
         titulo.setText("Chats Comprador");
         loadComponent(utils.CHATS_C);
     }

@@ -61,8 +61,8 @@ public class Compra extends AppCompatActivity implements OnMapReadyCallback {
                     finish();
                     return true;
                 case R.id.navigation_notifications:
-                    //startActivity(new Intent(Compra.this,homeCompras.class));
-                    //finish();
+                    startActivity(new Intent(Compra.this,ChatsActivity.class));
+                    finish();
                     return true;
             }
             return false;
@@ -79,6 +79,7 @@ public class Compra extends AppCompatActivity implements OnMapReadyCallback {
         map.onCreate(savedInstanceState);
         map.onResume();
         i=getIntent();
+        ((TextView)findViewById(R.id.nameProductC)).setText(i.getExtras().getString("nameProduct"));
         Button comprar=findViewById(R.id.btnComprarP);
         comprar.setOnClickListener(new View.OnClickListener() {
             @Override

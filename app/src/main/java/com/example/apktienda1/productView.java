@@ -50,28 +50,31 @@ public class productView extends AppCompatActivity implements OnLoadImg {
                     finish();
                     return true;
                 case R.id.navigation_notifications:
-                    //startActivity(new Intent(productView.this,homeCompras.class));
-                    //finish();
+                    startActivity(new Intent(productView.this,ChatsActivity.class));
+                    finish();
                     return true;
             }
             return false;
         }
     };
-
+    Bundle savedInstance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_view);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        savedInstance=savedInstanceState;
         loadComponents();
     }
     String idProduct;
     String idVendedor;
     Double Price;
+    String nameP;
     private void loadComponents() {
         Intent i=getIntent();
-        String name=i.getExtras().getString("name");
+
+        String name=nameP=i.getExtras().getString("name");
         Double price=Price=i.getExtras().getDouble("price");
         String description=i.getExtras().getString("description");
         String id=idProduct=i.getExtras().getString("id");
@@ -102,6 +105,7 @@ public class productView extends AppCompatActivity implements OnLoadImg {
                     Intent i=new Intent(productView.this,Compra.class);
                     i.putExtra("idProduct",idProduct);
                     i.putExtra("idVendedor",idVendedor);
+                    i.putExtra("nameProduct",nameP);
                     i.putExtra("price",Price);
                     startActivity(i);
                 }

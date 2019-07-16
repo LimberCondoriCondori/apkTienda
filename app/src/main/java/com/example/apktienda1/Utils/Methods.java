@@ -182,8 +182,10 @@ public class Methods {
                                 //solicitar chat al servidor
                             }else{
                                 if(utils.CHATS_C.size()>val){
-                                    if(utils.CHATS_C.get(val).id.equals(msn.idChat))
+                                    if(utils.CHATS_C.get(val).id.equals(msn.idChat)) {
                                         utils.CHATS_C.get(val).addMessege(msn);
+                                        insert = true;
+                                    }
                                 }
                                 if(utils.CHATS_V.size()>val&&!insert){
                                     if(utils.CHATS_V.get(val).id.equals(msn.idChat))
@@ -194,10 +196,6 @@ public class Methods {
                         } catch (JSONException e) {
                             return;
                         }
-
-                        // add the message chat
-
-
 
                     }
                 });

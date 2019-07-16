@@ -61,13 +61,13 @@ public class Chat {
         });
 
 
-        nameP="ejemplo1";
-        /*
+        //nameP="ejemplo1";
+
         AsyncHttpClient clientp =new AsyncHttpClient();
         Query qp=new Query();
-        qp.add("_id",idVendedor);
+        qp.add("_id",idProduct);
         clientp.addHeader("authorization", utils.TOKEN);
-        clientp.get(utils.HOST+utils.USER+qp.getQuery(),new RequestParams(),new JsonHttpResponseHandler(){
+        clientp.get(utils.HOST+utils.PRODUCT+qp.getQuery(),new RequestParams(),new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
@@ -77,7 +77,7 @@ public class Chat {
                     e.printStackTrace();
                 }
             }
-        });*/
+        });
     }
     public void addMessege(Messege m){
         msns.add(m);
@@ -86,15 +86,16 @@ public class Chat {
         }
     }
     public ArrayList<Messege> getMsns() {
-        for(int i=0;i<msns.size();i++){
-            if(!msns.get(i).leido){
-                JSONObject jo=new JSONObject();
+
+        for(int i=msns.size()-1;i>=0;i--){
+            if(!msns.get(i).leido) {
+                JSONObject jo = new JSONObject();
                 try {
-                    jo.put("id",msns.get(i).id);
+                    jo.put("id", msns.get(i).id);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                utils.mSocket.emit("showMsn",jo);
+                utils.mSocket.emit("showMsn", jo);
             }
         }
         alerta=false;

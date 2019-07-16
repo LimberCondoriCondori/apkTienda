@@ -75,6 +75,10 @@ public class MessegesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 m.msn=message.getText().toString();
                 utils.mSocket.emit("msnserver",m.getJSONobjetMsnSend());
+                Intent i=new Intent(MessegesActivity.this, MessegesActivity.class);
+                i.putExtra("indexChat",indexChat);
+                i.putExtra("idChat",idChat);
+                MessegesActivity.this.startActivity(i);
             }
         }
         send.setOnClickListener(new onClicSend(new Messege(utils.idUSer,"",idChat)));

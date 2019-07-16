@@ -68,8 +68,8 @@ public class EditarProducto extends AppCompatActivity implements OnLoadImg {
                     finish();
                     return true;
                 case R.id.navigation_notifications:
-                    //startActivity(new Intent(EditarProducto.this,homeCompras.class));
-                    //finish();
+                    startActivity(new Intent(EditarProducto.this,ChatsActivity.class));
+                    finish();
                     return true;
             }
             return false;
@@ -81,6 +81,7 @@ public class EditarProducto extends AppCompatActivity implements OnLoadImg {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_producto);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setSelectedItemId(R.id.navigation_dashboard);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         loadComponents();
 
